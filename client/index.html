@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WebGis</title>
+  <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+  <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
+  <!-- The lines below are only needed for old environments like Internet Explorer and Android 4.x -->
+  <script
+    src="https://cdn.polyfill.io/v3/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,TextDecoder"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.18.3/minified.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .map {
+      width: 100%;
+      height: 400px;
+    }
+
+    .ol-popup {
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #cccccc;
+      bottom: 12px;
+      left: -50px;
+      min-width: 280px;
+    }
+
+    .ol-popup:after,
+    .ol-popup:before {
+      top: 100%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .ol-popup:after {
+      border-top-color: white;
+      border-width: 10px;
+      left: 48px;
+      margin-left: -10px;
+    }
+
+    .ol-popup:before {
+      border-top-color: #cccccc;
+      border-width: 11px;
+      left: 48px;
+      margin-left: -11px;
+    }
+
+    .ol-popup-closer {
+      text-decoration: none;
+      position: absolute;
+      top: 2px;
+      right: 8px;
+    }
+
+    .ol-popup-closer:after {
+      content: "✖";
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+  <div id="popup" class="ol-popup">
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <div id="popup-content">
+    </div>
+    <button class="btn btn-danger deleteFeature">Xóa</button>
+  </div>
+
+
+  <form class="form-inline">
+    <label for="type">Geometry type &nbsp;</label>
+    <select id="type">
+      <option value="Point">Point</option>
+      <option value="LineString">LineString</option>
+      <option value="Polygon">Polygon</option>
+    </select>
+  </form>
+
+  <div class="modal" id="modalAdd" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thông tin điểm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary saveAdd">Save changes</button>
+          <button type="button" class="btn btn-secondary closeFormAdd" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary add">Add</button>
+  <button class="btn btn-warning stop">Stop Add</button>
+  <button class="btn btn-primary edit">Edit</button>
+  <button class="btn btn-warning stopEdit">Stop Edit</button>
+
+
+
+  <script type="module" src=" main.js"></script>
+</body>
+
+</html>
